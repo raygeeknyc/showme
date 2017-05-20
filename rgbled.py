@@ -54,3 +54,4 @@ if __name__ == "__main__":
     demo.setColor(RgbLed.WHITE)
     time.sleep(1)
     demo.setColor(RgbLed.OFF)
+    GPIO.cleanup()
