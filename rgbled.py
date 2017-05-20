@@ -1,3 +1,4 @@
+import time
 import RPi.GPIO as GPIO
 
 # Pin Definitons:
@@ -6,7 +7,8 @@ greenPin = 3
 bluePin = 4
 
 class RgbLed:
-    GPIO.setmode(GPIO. BOARD)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
 
     RED = (True, False, False)
     GREEN = (False, True, False)
@@ -17,21 +19,21 @@ class RgbLed:
     MAGENTA = (True, False, True)
     OFF = (False, False, False)
 
-    def __init__(self, redPin, GreenPin, BluePin):
+    def __init__(self, redPin, greenPin, bluePin):
 
         self._redPin = redPin
-        self._GreenPin = GreenPin
-        self._BluePin = BluePin
+        self._greenPin = greenPin
+        self._bluePin = bluePin
 
         GPIO.setup(self._redPin, GPIO.OUT)
         GPIO.setup(self._greenPin, GPIO.OUT)
         GPIO.setup(self._bluePin, GPIO.OUT)
         self.setColor(RgbLed.OFF)
 
-    def setColor(rgb):
-        GPIO.output(self._redPin, (rgb[0])?GPIO.LOW:GPIO.HIGH)
-        GPIO.output(self._greenPin, (rgb[1])?GPIO.LOW:GPIO.HIGH) 
-        GPIO.output(self._bluePin, (rgb[2])?GPIO.LOW:GPIO.HIGH)
+    def setColor(self, rgb):
+        GPIO.output(self._redPin, GPIO.LOW if rgb[0] else GPIO.HIGH)
+        GPIO.output(self._greenPin, GPIO.LOW if rgb[1] else GPIO.HIGH)
+        GPIO.output(self._bluePin, GPIO.LOW if rgb[2] else GPIO.HIGH)
 
 if __name__ == "__main__":
     demo = RgbLed(redPin, greenPin, bluePin)
@@ -51,3 +53,4 @@ if __name__ == "__main__":
     time.sleep(1)
     demo.setColor(RgbLed.WHITE)
     time.sleep(1)
+    demo.setColor(RgbLed.OFF)
